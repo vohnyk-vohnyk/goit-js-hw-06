@@ -1,10 +1,29 @@
-function getShippingMessage(country, price, deliveryFee) {
+class Storage {
+    #items;
 
-    const totalPrice = price + deliveryFee;
-    const message = `Shipping to ${country} will cost ${totalPrice} credits`;
-    return message;
+    constructor(items) {
+        this.#items = items;
+    }
+
+    getItems() {
+        return this.#items;
+    }
+
+    addItem(newItem) {
+        this.#items.push(newItem);
+    }
+
+    removeItem(itemToRemove) {
+        const itemIndex = this.#items.indexOf(itemToRemove);
+        if (itemIndex !== -1) {
+            this.#items.splice(itemIndex, 1);
+        }
+    }
 }
 
-console.log(getShippingMessage("USA", 1000, 50)); // "Shipping to USA will cost 1050 credits"
-console.log(getShippingMessage("Canada", 500, 30)); // "Shipping to Canada will cost 530 credits"
-console.log(getShippingMessage("UK", 1500, 70)); // "Shipping to UK will cost 1570 credits"
+const storage = new Storage(["Nanitoids", "Prolonger", "Antigravitator"]);
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
+storage.addItem("Droid");
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
+storage.removeItem("Prolonger");
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
